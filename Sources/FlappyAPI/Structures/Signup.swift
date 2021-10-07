@@ -8,14 +8,16 @@
 
 import Foundation
 
-public final class Signup: Codable {
-    public var name: String
-    public var password: String
-    public var confirmPassword: String
-    
-    init(_ name: String, _ password: String, _ confirmPassword: String) {
-        self.name = name
-        self.password = password
-        self.confirmPassword = password
+public extension FlappyAPI {
+    final class Signup: Codable {
+        public var name: String
+        public var password: String
+        public var confirmPassword: String
+        
+        init(_ name: String, _ password: String, _ confirmPassword: String) {
+            self.name = name
+            self.password = password
+            self.confirmPassword = password
+        }
     }
 }
