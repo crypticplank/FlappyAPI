@@ -1,8 +1,11 @@
 import Foundation
 import FlappyEncryption
 
-public extension FlappyAPI {
-    enum APIError:Error {
+public struct FlappyAPI {
+    let apiURL = "https://flappybird.brandonplank.org"
+    let resourceURL: URL
+    
+    public enum APIError:Error {
         case success
         case responseProblem
         case decodingProblem
@@ -11,15 +14,10 @@ public extension FlappyAPI {
         case otherProblem
     }
 
-    class SignupError: Codable {
+    public class SignupError: Codable {
         var error: Bool?
         var reason: String?
     }
-}
-
-public struct FlappyAPI {
-    let apiURL = "https://flappybird.brandonplank.org"
-    let resourceURL: URL
     
     
     public init(endpoint: String) {
