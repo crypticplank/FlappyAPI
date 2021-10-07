@@ -21,7 +21,7 @@ public extension FlappyAPI {
         public var hasModifiedScore: Bool?
         public var isBanned: Bool?
         
-        init(id: UUID? = UUID(), name: String, score: Int? = 0, deaths: Int? = 0, passwordHash: String, jailbroken: Bool? = false, hasHackedTools: Bool? = false, ranInEmulator: Bool? = false, hasModifiedScore: Bool? = false, isBanned: Bool? = false) {
+        public init(id: UUID? = UUID(), name: String, score: Int? = 0, deaths: Int? = 0, passwordHash: String, jailbroken: Bool? = false, hasHackedTools: Bool? = false, ranInEmulator: Bool? = false, hasModifiedScore: Bool? = false, isBanned: Bool? = false) {
             self.id = id
             self.name = name
             self.score = score
@@ -41,7 +41,7 @@ public extension FlappyAPI {
         public var score: Int?
         public var deaths: Int?
         
-        init(id: UUID? = UUID(), name: String, score: Int? = 0, deaths: Int? = 0) {
+        public init(id: UUID? = UUID(), name: String, score: Int? = 0, deaths: Int? = 0) {
             self.id = id
             self.name = name
             self.score = score

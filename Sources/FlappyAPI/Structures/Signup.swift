@@ -14,7 +14,7 @@ public extension FlappyAPI {
         public var password: String
         public var confirmPassword: String
         
-        init(_ name: String, _ password: String, _ confirmPassword: String) {
+        public init(_ name: String, _ password: String, _ confirmPassword: String) {
             self.name = name
             self.password = password
             self.confirmPassword = password

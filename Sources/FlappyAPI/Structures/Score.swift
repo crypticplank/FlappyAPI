@@ -13,7 +13,7 @@ public extension FlappyAPI {
         public var score: String
         public var time: String
         
-        init(_ score: String, _ time: String) {
+        public init(_ score: String, _ time: String) {
             self.score = score
             self.time = time
         }
@@ -23,7 +23,7 @@ public extension FlappyAPI {
         public var score: Int
         public var time: Int
         
-        init(_ score: Int, _ time: Int) {
+        public init(_ score: Int, _ time: Int) {
             self.score = score
             self.time = time
         }
