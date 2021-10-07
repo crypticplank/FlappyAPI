@@ -1,2 +1,3 @@
 # FlappyAPI
-Flappybirds API swift library
+
+A description of this package.
