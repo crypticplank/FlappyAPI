@@ -1,18 +1,20 @@
 import Foundation
 import FlappyEncryption
 
-public enum APIError:Error {
-    case success
-    case responseProblem
-    case decodingProblem
-    case encodingProblem
-    case userExists
-    case otherProblem
-}
+public extension FlappyAPI {
+    enum APIError:Error {
+        case success
+        case responseProblem
+        case decodingProblem
+        case encodingProblem
+        case userExists
+        case otherProblem
+    }
 
-public class SignupError: Codable {
-    var error: Bool?
-    var reason: String?
+    class SignupError: Codable {
+        var error: Bool?
+        var reason: String?
+    }
 }
 
 public struct FlappyAPI {

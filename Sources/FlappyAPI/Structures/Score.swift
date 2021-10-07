@@ -8,22 +8,25 @@
 
 import Foundation
 
-final public class ScoreEncrypted: Codable {
-    var score: String
-    var time: String
-    
-    init(_ score: String, _ time: String) {
-        self.score = score
-        self.time = time
+public extension FlappyAPI {
+    final class ScoreEncrypted: Codable {
+        var score: String
+        var time: String
+        
+        init(_ score: String, _ time: String) {
+            self.score = score
+            self.time = time
+        }
     }
-}
 
-final public class Score: Codable {
-    var score: Int
-    var time: Int
-    
-    init(_ score: Int, _ time: Int) {
-        self.score = score
-        self.time = time
+    final class Score: Codable {
+        var score: Int
+        var time: Int
+        
+        init(_ score: Int, _ time: Int) {
+            self.score = score
+            self.time = time
+        }
     }
+
 }
