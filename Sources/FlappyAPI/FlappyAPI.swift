@@ -15,8 +15,8 @@ public struct FlappyAPI {
     }
 
     public class SignupError: Codable {
-        var error: Bool?
-        var reason: String?
+        public var error: Bool?
+        public var reason: String?
     }
     
     
