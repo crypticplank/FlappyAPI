@@ -189,6 +189,16 @@ public struct FlappyAPI {
         dataTask.resume()
     }
     
+    public func deleteUser(_ name: String, _ password: String, _ id: String) {
+        var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)")!)
+        urlRequest.httpMethod = "GET"
+        urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
+        }
+        dataTask.resume()
+    }
+    
     public func restoreScore(_ name: String, _ password: String, _ id: String, _ score: Int = 0) {
         var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)/\(score)")!)
         urlRequest.httpMethod = "GET"
