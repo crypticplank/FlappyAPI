@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class ScoreEncrypted: Codable {
+final public class ScoreEncrypted: Codable {
     var score: String
     var time: String
     
@@ -18,7 +18,7 @@ final class ScoreEncrypted: Codable {
     }
 }
 
-final class Score: Codable {
+final public class Score: Codable {
     var score: Int
     var time: Int
     

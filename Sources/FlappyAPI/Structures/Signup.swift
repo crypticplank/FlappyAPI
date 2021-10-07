@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class Signup: Codable {
+final public class Signup: Codable {
     var name: String
     var password: String
     var confirmPassword: String

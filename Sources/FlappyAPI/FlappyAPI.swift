@@ -1,7 +1,7 @@
 import Foundation
 import FlappyEncryption
 
-enum APIError:Error {
+public enum APIError:Error {
     case success
     case responseProblem
     case decodingProblem
@@ -10,23 +10,23 @@ enum APIError:Error {
     case otherProblem
 }
 
-class SignupError: Codable {
+public class SignupError: Codable {
     var error: Bool?
     var reason: String?
 }
 
-struct FlappyAPI {
+public struct FlappyAPI {
     let apiURL = "https://flappybird.brandonplank.org"
     let resourceURL: URL
     
     
-    init(endpoint: String) {
+    public init(endpoint: String) {
         let resourceString = "\(apiURL)/\(endpoint)"
         guard let url: URL = URL(string: resourceString) else { fatalError() }
         self.resourceURL = url
     }
     
-    func getLeaderBoard(userAmount: Int) -> [PublicUser] {
+    public func getLeaderBoard(userAmount: Int) -> [PublicUser] {
         var users = [PublicUser]()
         
         let semaphore = DispatchSemaphore(value: 0)
@@ -54,7 +54,7 @@ struct FlappyAPI {
         return users
     }
     
-    func getInt() -> Int {
+    public func getInt() -> Int {
         var count = 0
         
         let semaphore = DispatchSemaphore(value: 0)
@@ -79,7 +79,7 @@ struct FlappyAPI {
         return count
     }
     
-    func signup(_ signupDetails: Signup) -> SignupError? {
+    public func signup(_ signupDetails: Signup) -> SignupError? {
         
         var error: SignupError? = nil
         
@@ -109,7 +109,7 @@ struct FlappyAPI {
         return error
     }
     
-    func login(_ name: String, _ password: String, compleation: @escaping(Result<PublicUser, APIError>) -> Void) {
+    public func login(_ name: String, _ password: String, compleation: @escaping(Result<PublicUser, APIError>) -> Void) {
         do {
             var urlRequest = URLRequest(url: resourceURL)
             urlRequest.httpMethod = "POST"
@@ -134,7 +134,7 @@ struct FlappyAPI {
         }
     }
     
-    func submitScore(_ name: String, _ password: String, _ score: Score) {
+    public func submitScore(_ name: String, _ password: String, _ score: Score) {
         let encrypted = ScoreEncrypted(FlappyEncryption.encryptBase64Int(score.score)!, FlappyEncryption.encryptBase64Int(score.time)!)
         do {
             var urlRequest = URLRequest(url: resourceURL)
@@ -150,7 +150,7 @@ struct FlappyAPI {
         }
     }
     
-    func getUserID(_ name: String) -> String? {
+    public func getUserID(_ name: String) -> String? {
         var uuid: String? = nil
         
         let semaphore = DispatchSemaphore(value: 0)
@@ -170,7 +170,7 @@ struct FlappyAPI {
         return uuid
     }
     
-    func ban(_ name: String, _ password: String, _ id: String, _ reason: String? = nil) {
+    public func ban(_ name: String, _ password: String, _ id: String, _ reason: String? = nil) {
         var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)/\(reason ?? "Not Specified")")!)
         urlRequest.httpMethod = "GET"
         urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
@@ -180,7 +180,7 @@ struct FlappyAPI {
         dataTask.resume()
     }
     
-    func unban(_ name: String, _ password: String, _ id: String) {
+    public func unban(_ name: String, _ password: String, _ id: String) {
         var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)")!)
         urlRequest.httpMethod = "GET"
         urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
@@ -190,7 +190,7 @@ struct FlappyAPI {
         dataTask.resume()
     }
     
-    func restoreScore(_ name: String, _ password: String, _ id: String, _ score: Int = 0) {
+    public func restoreScore(_ name: String, _ password: String, _ id: String, _ score: Int = 0) {
         var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)/\(score)")!)
         urlRequest.httpMethod = "GET"
         urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
@@ -200,7 +200,7 @@ struct FlappyAPI {
         dataTask.resume()
     }
     
-    func ping(_ name: String, _ password: String) {
+    public func ping(_ name: String, _ password: String) {
         do {
             var urlRequest = URLRequest(url: resourceURL)
             urlRequest.httpMethod = "POST"
@@ -211,7 +211,7 @@ struct FlappyAPI {
         }
     }
     
-    func createAuthHeader(_ name: String, _ password: String) -> String {
+    public func createAuthHeader(_ name: String, _ password: String) -> String {
         let loginString = String(format: "%@:%@", name, password)
         let loginData = loginString.data(using: String.Encoding.utf8)!
         let base64LoginString = loginData.base64EncodedString()

@@ -9,7 +9,7 @@
 import Foundation
 
 
-final class User: Codable {
+final public class User: Codable {
     var id: UUID?
     var name: String
     var score: Int?
@@ -35,7 +35,7 @@ final class User: Codable {
     }
 }
 
-final class PublicUser: Codable {
+final public class PublicUser: Codable {
     var id: UUID?
     var name: String
     var score: Int?
