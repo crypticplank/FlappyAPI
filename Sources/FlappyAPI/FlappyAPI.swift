@@ -19,7 +19,6 @@ public struct FlappyAPI {
         public var reason: String?
     }
     
-    
     public init(endpoint: String) {
         let resourceString = "\(apiURL)/\(endpoint)"
         guard let url: URL = URL(string: resourceString) else { fatalError() }
