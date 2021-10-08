@@ -226,6 +226,19 @@ public struct FlappyAPI {
         semaphore.wait()
     }
     
+    public func makeAdmin(_ name: String, _ password: String, _ id: String) {
+        let semaphore = DispatchSemaphore(value: 0)
+        var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)")!)
+        urlRequest.httpMethod = "GET"
+        urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
+        
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
+            semaphore.signal()
+        }
+        dataTask.resume()
+        semaphore.wait()
+    }
+    
     public func ping(_ name: String, _ password: String) {
         let semaphore = DispatchSemaphore(value: 0)
         do {
