@@ -21,9 +21,6 @@ public struct FlappyAPI {
     }
     
     public init(endpoint: String) {
-        #if DEBUG
-        print("Setting endpoint to \(endpoint)")
-        #endif
         let resourceString = "\(apiURL)/\(endpoint)"
         guard let url: URL = URL(string: resourceString) else { fatalError() }
         self.resourceURL = url
