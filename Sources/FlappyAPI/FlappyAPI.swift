@@ -2,7 +2,11 @@ import Foundation
 import FlappyEncryption
 
 public struct FlappyAPI {
+    #if DEBUG
+    let apiURL = "http://127.0.0.1"
+    #else
     let apiURL = "https://flappybird.brandonplank.org"
+    #endif
     let resourceURL: URL
     
     public enum APIError:Error {
@@ -134,13 +138,17 @@ public struct FlappyAPI {
     }
     
     public func submitScore(_ name: String, _ password: String, _ score: Score) {
-        let encrypted = ScoreEncrypted(FlappyEncryption.encryptBase64Int(score.score)!, FlappyEncryption.encryptBase64Int(score.time)!)
+        #if DEBUG
+        print("Score: \(score.score)")
+        print("Time: \(score.time)")
+        #endif
+        let score = FlappyAPI.VerifiedScore(score.score, score.time, FlappyEncryption.genHash(score.score, score.time))
         do {
             var urlRequest = URLRequest(url: resourceURL)
             urlRequest.httpMethod = "POST"
             urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = try JSONEncoder().encode(encrypted)
+            urlRequest.httpBody = try JSONEncoder().encode(score)
             
             let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
             }
@@ -218,6 +226,32 @@ public struct FlappyAPI {
             }
             dataTask.resume()
         }
+    }
+    
+    public func getUsers(_ name: String, _ password: String) -> [User]? {
+        
+        var users: [User]?
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        do {
+            var urlRequest = URLRequest(url: resourceURL)
+            urlRequest.httpMethod = "GET"
+            urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
+            let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
+                guard let jsonData = data else {
+                    return
+                }
+                do {
+                    users = try JSONDecoder().decode([User].self, from: jsonData)
+                    semaphore.signal()
+                } catch {
+                }
+            }
+            dataTask.resume()
+            semaphore.wait()
+        }
+        return users
     }
     
     public func createAuthHeader(_ name: String, _ password: String) -> String {
