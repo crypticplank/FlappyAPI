@@ -178,53 +178,68 @@ public struct FlappyAPI {
     }
     
     public func ban(_ name: String, _ password: String, _ id: String, _ reason: String? = nil) {
+        let semaphore = DispatchSemaphore(value: 0)
         var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)/\(reason ?? "Not%20Specified")")!)
         urlRequest.httpMethod = "GET"
         urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
         
         let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
+            semaphore.signal()
         }
         dataTask.resume()
+        semaphore.wait()
     }
     
     public func unban(_ name: String, _ password: String, _ id: String) {
+        let semaphore = DispatchSemaphore(value: 0)
         var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)")!)
         urlRequest.httpMethod = "GET"
         urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
         
         let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
+            semaphore.signal()
         }
         dataTask.resume()
+        semaphore.wait()
     }
     
     public func deleteUser(_ name: String, _ password: String, _ id: String) {
+        let semaphore = DispatchSemaphore(value: 0)
         var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)")!)
         urlRequest.httpMethod = "GET"
         urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
         
         let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
+            semaphore.signal()
         }
         dataTask.resume()
+        semaphore.wait()
     }
     
     public func restoreScore(_ name: String, _ password: String, _ id: String, _ score: Int = 0) {
+        let semaphore = DispatchSemaphore(value: 0)
         var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)/\(score)")!)
         urlRequest.httpMethod = "GET"
         urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
         
         let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
+            semaphore.signal()
         }
         dataTask.resume()
+        semaphore.wait()
     }
     
     public func ping(_ name: String, _ password: String) {
+        let semaphore = DispatchSemaphore(value: 0)
         do {
             var urlRequest = URLRequest(url: resourceURL)
             urlRequest.httpMethod = "POST"
             urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
             let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
+                semaphore.signal()
             }
             dataTask.resume()
+            semaphore.wait()
         }
     }
     
