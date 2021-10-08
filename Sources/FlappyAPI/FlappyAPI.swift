@@ -2,11 +2,8 @@ import Foundation
 import FlappyEncryption
 
 public struct FlappyAPI {
-    #if DEBUG
-    let apiURL = "http://127.0.0.1"
-    #else
     let apiURL = "https://flappybird.brandonplank.org"
-    #endif
+
     let resourceURL: URL
     
     public enum APIError:Error {
