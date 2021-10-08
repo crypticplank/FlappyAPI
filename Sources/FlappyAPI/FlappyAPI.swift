@@ -178,7 +178,7 @@ public struct FlappyAPI {
     }
     
     public func ban(_ name: String, _ password: String, _ id: String, _ reason: String? = nil) {
-        var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)/\(reason ?? "Not Specified")")!)
+        var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)/\(reason ?? "Not%20Specified")")!)
         urlRequest.httpMethod = "GET"
         urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
         
