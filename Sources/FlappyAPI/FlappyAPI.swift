@@ -20,6 +20,10 @@ public struct FlappyAPI {
         public var reason: String?
     }
     
+    public class Abort: Codable {
+        public var reason: String?
+    }
+    
     public init(endpoint: String) {
         let resourceString = "\(apiURL)/\(endpoint)"
         guard let url: URL = URL(string: resourceString) else { fatalError() }
@@ -174,17 +178,31 @@ public struct FlappyAPI {
         return uuid
     }
     
-    public func ban(_ name: String, _ password: String, _ id: String, _ reason: String? = nil) {
+    public func ban(_ name: String, _ password: String, _ id: String, _ reason: String? = nil) -> String? {
+        var error: Abort? = nil
         let semaphore = DispatchSemaphore(value: 0)
         var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)/\(reason ?? "Not%20Specified")")!)
         urlRequest.httpMethod = "GET"
         urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
         
         let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
+            guard let jsonData = data else {
+                return
+            }
+            do {
+                error = try JSONDecoder().decode(Abort.self, from: jsonData)
+            } catch {
+                print("Failed to decode Abort()")
+            }
             semaphore.signal()
         }
         dataTask.resume()
         semaphore.wait()
+        guard let error = error else {
+            return nil
+        }
+
+        return error.reason ?? "Unspecified"
     }
     
     public func unban(_ name: String, _ password: String, _ id: String) {
