@@ -205,17 +205,31 @@ public struct FlappyAPI {
         return error.reason ?? "Unspecified"
     }
     
-    public func unban(_ name: String, _ password: String, _ id: String) {
+    public func unban(_ name: String, _ password: String, _ id: String) -> String? {
+        var error: Abort? = nil
         let semaphore = DispatchSemaphore(value: 0)
         var urlRequest = URLRequest(url: URL(string: "\(resourceURL.absoluteString)/\(id)")!)
         urlRequest.httpMethod = "GET"
         urlRequest.addValue(createAuthHeader(name, password), forHTTPHeaderField: "Authorization")
         
         let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
+            guard let jsonData = data else {
+                return
+            }
+            do {
+                error = try JSONDecoder().decode(Abort.self, from: jsonData)
+            } catch {
+                print("Failed to decode Abort()")
+            }
             semaphore.signal()
         }
         dataTask.resume()
         semaphore.wait()
+        guard let error = error else {
+            return nil
+        }
+
+        return error.reason ?? "Unspecified"
     }
     
     public func deleteUser(_ name: String, _ password: String, _ id: String) {
