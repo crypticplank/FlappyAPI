@@ -2,7 +2,7 @@ import Foundation
 import FlappyEncryption
 
 public struct FlappyAPI {
-    let apiURL = "https://flappybird.brandonplank.org"
+    public let apiURL = "https://flappybird.brandonplank.org"
 
     let resourceURL: URL
     
