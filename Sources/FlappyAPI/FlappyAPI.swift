@@ -30,6 +30,33 @@ public struct FlappyAPI {
         self.resourceURL = url
     }
     
+    public init() {
+        let resourceString = apiURL
+        guard let url: URL = URL(string: resourceString) else { fatalError() }
+        self.resourceURL = url
+    }
+    
+    public func isServerOnline() -> Bool {
+        var online = true
+        let semaphore = DispatchSemaphore(value: 0)
+        do {
+            var urlRequest = URLRequest(url: resourceURL)
+            urlRequest.httpMethod = "GET"
+            
+            let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response, _ in
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    online = false
+                    semaphore.signal()
+                    return
+                }
+                semaphore.signal()
+            }
+            dataTask.resume()
+            semaphore.wait()
+        }
+        return online
+    }
+    
     public func getLeaderBoard(userAmount: Int) -> [PublicUser] {
         var users = [PublicUser]()
         
