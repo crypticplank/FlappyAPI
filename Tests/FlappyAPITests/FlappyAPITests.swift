@@ -7,24 +7,24 @@ final class FlappyAPITests: XCTestCase {
 //        FlappyAPI(endpoint: "registerUser").signup(FlappyAPI.Signup(username, password, password))
 //    }
     
-//    func testGetID() {
-//        print("Running getid test")
-//        print("ID: \(FlappyAPI(endpoint: "getID").getUserID(username)!)")
-//    }
-//
-//    func testGetDeaths() {
-//        print("Running deaths test")
-//        print("Deaths: \(FlappyAPI(endpoint: "globalDeaths").getInt())")
-//    }
-//
-//    func testGetUsers() {
-//        print("Running users test")
-//        print("Users: \(FlappyAPI(endpoint: "userCount").getInt())")
-//    }
-//
+    func testGetID() {
+        print("Running getid test")
+        print("ID: \(FlappyAPI(endpoint: "getID").getUserID("Brandon")!)")
+    }
+
+    func testGetDeaths() {
+        print("Running deaths test")
+        print("Deaths: \(FlappyAPI(endpoint: "globalDeaths").getInt())")
+    }
+
+    func testGetUsers() {
+        print("Running users test")
+        print("Users: \(FlappyAPI(endpoint: "userCount").getInt())")
+    }
+
 //    func testGetPasswordHashes() {
 //        print("Running Password hashes")
-//        let users = FlappyAPI(endpoint: "internal_users").getUsers(username, password)
+//        let users = FlappyAPI(endpoint: "auth/internal_users").getUsers(username, password)
 //        guard let users = users else {
 //            print("Failed to get users")
 //            return
