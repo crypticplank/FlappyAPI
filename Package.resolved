@@ -5,14 +5,14 @@
         "package": "CryptoSwift",
         "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift.git",
         "state": {
-          "branch": "master",
-          "revision": "4b0565384d3c4c588af09e660535b2c7c9bf5b39",
-          "version": null
+          "branch": null,
+          "revision": "039f56c5d7960f277087a0be51f5eb04ed0ec073",
+          "version": "1.5.1"
         }
       },
       {
         "package": "FlappyEncryption",
-        "repositoryURL": "https://github.com/BrandonPlank/FlappyEncryption",
+        "repositoryURL": "https://github.com/crypticplank/FlappyEncryption",
         "state": {
           "branch": "main",
           "revision": "be8e29f031c019c6917cf2f07a2a3b56496ff9b8",
